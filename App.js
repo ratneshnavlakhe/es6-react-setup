@@ -6,7 +6,7 @@ class App extends React.Component {
   constructor() {
     super();
 
-    this.state = {val: 0};
+    this.state = {val: 0, m: 0};
     this.update = this.update.bind(this);
   }
 
@@ -15,18 +15,18 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    console.log('mounting');
+    this.setState({ m: 2 });
   }
   componentDidMount() {
-    console.log('mounted');
+    this.inc = setInterval(this.update, 500)
   }
   render() {
     console.log('rendering');
-    return <button onClick={this.update}>{this.state.val}</button>
+    return <button onClick={this.update}>{this.state.val * this.state.m}</button>
   }
 
   componentWillUnmount () {
-    console.log('bye');
+    clearInterval(this.inc)
   }
 }
 
