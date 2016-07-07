@@ -3,31 +3,49 @@ import ReactDOM from 'react-dom';
 
 // Make a class component.
 class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {val: 0};
+    this.update = this.update.bind(this);
+  }
+
+  update() {
+    this.setState({ val: this.state.val+1 })
+  }
+
+  componentWillMount() {
+    console.log('mounting');
+  }
+  componentDidMount() {
+    console.log('mounted');
+  }
   render() {
-    return <Button>I <Heart/> React</Button>
+    console.log('rendering');
+    return <button onClick={this.update}>{this.state.val}</button>
+  }
+
+  componentWillUnmount () {
+    console.log('bye');
   }
 }
 
-class Button extends React.Component {
+class Wrapper extends React.Component {
+  mount() {
+    ReactDOM.render(<App />, document.getElementById('a'))
+  }
+  unmount() {
+    ReactDOM.unmountComponentAtNode(document.getElementById('a'))
+  }
   render() {
-    return <button>{this.props.children}</button>
+    return (
+      <div>
+        <button onClick={this.mount.bind(this)}>Mount</button>
+        <button onClick={this.unmount.bind(this)}>Unmount</button>
+        <div id="a"></div>
+      </div>
+    )
   }
 }
 
-const Heart = () => <span>Love</span>
-//state less function component.
-// const Widget = (props) => {
-//   return (
-//     <div>
-//       <input type="text"
-//         onChange={props.update} />
-//       <h1>{props.txt}</h1>
-//     </div>
-//   )
-// }
-
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('app')
-);
+export default Wrapper
