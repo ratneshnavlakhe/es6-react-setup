@@ -12,7 +12,16 @@ class App extends React.Component {
 //state less function component.
 //const App = () => <h1>Hello World</h1>
 
+App.propTypes = {
+  txt: React.PropTypes.string,
+  cat: React.PropTypes.number.isRequired
+}
+
+App.defaultProps = {
+  txt: 'this is the default txt'
+}
+
 ReactDOM.render(
-  <App txt="this is the props value" />,
+  <App cat={5} />,
   document.getElementById('app')
 );
